@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services - Zygnite Dev-Hub</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <style>
+        /* Custom Variables */
+        :root {
+            --primary-color: #6366f1;
+            --secondary-color: #8b5cf6;
+            --accent-color: #ec4899;
+            --dark-bg: #0f172a;
+            --light-bg: #1e293b;
+            --text-light: #e2e8f0;
+            --text-dim: #94a3b8;
+        }
+        
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+        
+        /* Gradient Text */
+        .gradient-text {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: gradient 3s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Navbar Styles */
+        .navbar {
+            backdrop-filter: blur(10px);
+            background-color: rgba(15, 23, 42, 0.8);
+            transition: all 0.3s ease;
+        }
+        
+        .navbar.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Hero Banner */
+        .hero-banner {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+        }
+        
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://picsum.photos/seed/services-hero/1920/600.jpg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.3;
+            z-index: -1;
+        }
+        
+        /* Service Cards */
+        .service-card {
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.7));
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            position: relative;
+            height: 100%;
+        }
+        
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s;
+        }
+        
+        .service-card:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+        
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .service-card:hover .service-icon {
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.4);
+        }
+        
+        /* Feature Cards */
+        .feature-card {
+            background: linear-gradient(145deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.7));
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-color);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.3);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: rotate(15deg) scale(1.1);
+        }
+        
+        /* CTA Banner */
+        .cta-banner {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.2), rgba(139, 92, 246, 0.2));
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-banner::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+        }
+        
+        /* Mobile Menu Toggle */
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        
+        /* Glowing Effect */
+        .glow {
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+        }
+        
+        /* Button Styles */
+        .btn-primary {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+            z-index: -1;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+        
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+        
+        /* Service Detail Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background-color: var(--light-bg);
+            margin: 5% auto;
+            padding: 2rem;
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            width: 90%;
+            max-width: 800px;
+            border-radius: 1rem;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-dim);
+            transition: color 0.3s ease;
+        }
+        
+        .close:hover {
+            color: var(--text-light);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar fixed w-full z-50 px-4 py-4 transition-all duration-300">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <div class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold text-xl">ZD</span>
+                </div>
+                <span class="text-xl font-bold gradient-text">Zygnite Dev-Hub</span>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex space-x-8">
+                <a href="index.html" class="text-gray-300 hover:text-white transition">Home</a>
+                <a href="about.html" class="text-gray-300 hover:text-white transition">About</a>
+                <a href="services-pricing.html" class="text-white font-medium">Services</a>
+                <a href="portfolio.html" class="text-gray-300 hover:text-white transition">Portfolio</a>
+                <a href="blogs.html" class="text-gray-300 hover:text-white transition">Blogs</a>
+                <a href="technology.html" class="text-gray-300 hover:text-white transition">Technology</a>
+                <a href="career.html" class="text-gray-300 hover:text-white transition">Career</a>
+                <a href="contact.html" class="text-gray-300 hover:text-white transition">Contact</a>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-gray-300 focus:outline-none">
+                <i class="fas fa-bars text-2xl"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 w-64 h-full bg-gray-900 bg-opacity-95 backdrop-blur-lg md:hidden z-50">
+            <div class="flex justify-end p-4">
+                <button id="close-menu-btn" class="text-gray-300 focus:outline-none">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <div class="flex flex-col p-4 space-y-6">
+                <a href="index.html" class="text-gray-300 hover:text-white transition text-lg">Home</a>
+                <a href="about.html" class="text-gray-300 hover:text-white transition text-lg">About</a>
+                <a href="services-pricing.html" class="text-white font-medium text-lg">Services</a>
+                <a href="portfolio.html" class="text-gray-300 hover:text-white transition text-lg">Portfolio</a>
+                <a href="blogs.html" class="text-gray-300 hover:text-white transition text-lg">Blogs</a>
+                <a href="technology.html" class="text-gray-300 hover:text-white transition text-lg">Technology</a>
+                <a href="career.html" class="text-gray-300 hover:text-white transition text-lg">Career</a>
+                <a href="contact.html" class="text-gray-300 hover:text-white transition text-lg">Contact</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Banner -->
+    <section class="hero-banner h-96 flex items-center justify-center relative">
+        <div class="container mx-auto px-4 text-center z-10">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6" data-aos="fade-up">
+                Our IT Solutions, <span class="gradient-text">Your Success</span>
+            </h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                Cutting-edge technology solutions tailored to drive your business forward
+            </p>
+        </div>
+    </section>
+    
+    <!-- Services Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Our <span class="gradient-text">Services</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Comprehensive IT solutions designed to meet your business needs</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service Card 1 -->
+                <div class="service-card p-8 rounded-xl" data-aos="fade-up" data-aos-delay="100">
+                    <div class="service-icon">
+                        <i class="fas fa-code text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Web Development</h3>
+                    <p class="text-gray-400 mb-4">Custom web applications built with the latest technologies and best practices.</p>
+                    <ul class="text-gray-400 text-sm mb-6 space-y-1">
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Responsive Design</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Modern Frameworks</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>SEO Optimized</li>
+                    </ul>
+                    <button class="service-details-btn text-indigo-400 hover:text-indigo-300 transition" data-service="web-development">
+                        Learn More <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+                
+                <!-- Service Card 2 -->
+                <div class="service-card p-8 rounded-xl" data-aos="fade-up" data-aos-delay="200">
+                    <div class="service-icon">
+                        <i class="fas fa-mobile-alt text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Mobile App Development</h3>
+                    <p class="text-gray-400 mb-4">Native and cross-platform mobile applications for iOS and Android.</p>
+                    <ul class="text-gray-400 text-sm mb-6 space-y-1">
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>iOS & Android</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Cross-Platform</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>App Store Optimization</li>
+                    </ul>
+                    <button class="service-details-btn text-indigo-400 hover:text-indigo-300 transition" data-service="mobile-development">
+                        Learn More <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+                
+                <!-- Service Card 3 -->
+                <div class="service-card p-8 rounded-xl" data-aos="fade-up" data-aos-delay="300">
+                    <div class="service-icon">
+                        <i class="fas fa-cloud text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Cloud Solutions</h3>
+                    <p class="text-gray-400 mb-4">Scalable cloud infrastructure and migration services for modern businesses.</p>
+                    <ul class="text-gray-400 text-sm mb-6 space-y-1">
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>AWS & Azure</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Cloud Migration</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>DevOps Implementation</li>
+                    </ul>
+                    <button class="service-details-btn text-indigo-400 hover:text-indigo-300 transition" data-service="cloud-solutions">
+                        Learn More <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+                
+                <!-- Service Card 4 -->
+                <div class="service-card p-8 rounded-xl" data-aos="fade-up" data-aos-delay="400">
+                    <div class="service-icon">
+                        <i class="fas fa-robot text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">AI & Machine Learning</h3>
+                    <p class="text-gray-400 mb-4">Intelligent solutions powered by artificial intelligence and machine learning.</p>
+                    <ul class="text-gray-400 text-sm mb-6 space-y-1">
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Predictive Analytics</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Natural Language Processing</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Computer Vision</li>
+                    </ul>
+                    <button class="service-details-btn text-indigo-400 hover:text-indigo-300 transition" data-service="ai-ml">
+                        Learn More <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+                
+                <!-- Service Card 5 -->
+                <div class="service-card p-8 rounded-xl" data-aos="fade-up" data-aos-delay="500">
+                    <div class="service-icon">
+                        <i class="fas fa-database text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Data Analytics</h3>
+                    <p class="text-gray-400 mb-4">Transform your data into actionable insights with our analytics solutions.</p>
+                    <ul class="text-gray-400 text-sm mb-6 space-y-1">
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Business Intelligence</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Data Visualization</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Big Data Processing</li>
+                    </ul>
+                    <button class="service-details-btn text-indigo-400 hover:text-indigo-300 transition" data-service="data-analytics">
+                        Learn More <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+                
+                <!-- Service Card 6 -->
+                <div class="service-card p-8 rounded-xl" data-aos="fade-up" data-aos-delay="600">
+                    <div class="service-icon">
+                        <i class="fas fa-lock text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Cybersecurity</h3>
+                    <p class="text-gray-400 mb-4">Comprehensive security solutions to protect your digital assets.</p>
+                    <ul class="text-gray-400 text-sm mb-6 space-y-1">
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Security Audits</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Penetration Testing</li>
+                        <li><i class="fas fa-check text-indigo-400 mr-2"></i>Compliance Management</li>
+                    </ul>
+                    <button class="service-details-btn text-indigo-400 hover:text-indigo-300 transition" data-service="cybersecurity">
+                        Learn More <i class="fas fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Why Choose Zygnite Section -->
+    <section class="py-20 bg-gray-900 bg-opacity-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Why Choose <span class="gradient-text">Zygnite</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">We deliver exceptional value through our commitment to excellence</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card p-6 rounded-xl text-center" data-aos="fade-up" data-aos-delay="100">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-expand-arrows-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Scalability</h3>
+                    <p class="text-gray-400">Our solutions grow with your business, ensuring long-term success without limitations.</p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card p-6 rounded-xl text-center" data-aos="fade-up" data-aos-delay="200">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Security</h3>
+                    <p class="text-gray-400">Enterprise-grade security measures to protect your data and systems from threats.</p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card p-6 rounded-xl text-center" data-aos="fade-up" data-aos-delay="300">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-lightbulb text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Innovation</h3>
+                    <p class="text-gray-400">Cutting-edge technologies and forward-thinking approaches to solve complex challenges.</p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="feature-card p-6 rounded-xl text-center" data-aos="fade-up" data-aos-delay="400">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-headset text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">24/7 Support</h3>
+                    <p class="text-gray-400">Round-the-clock support to ensure your systems run smoothly at all times.</p>
+                </div>
+                
+                <!-- Feature 5 -->
+                <div class="feature-card p-6 rounded-xl text-center" data-aos="fade-up" data-aos-delay="500">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-users text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Expert Team</h3>
+                    <p class="text-gray-400">Highly skilled professionals with deep expertise in their respective domains.</p>
+                </div>
+                
+                <!-- Feature 6 -->
+                <div class="feature-card p-6 rounded-xl text-center" data-aos="fade-up" data-aos-delay="600">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-tachometer-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Performance</h3>
+                    <p class="text-gray-400">Optimized solutions that deliver exceptional speed and reliability.</p>
+                </div>
+                
+                <!-- Feature 7 -->
+                <div class="feature-card p-6 rounded-xl text-center" data-aos="fade-up" data-aos-delay="700">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-handshake text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Partnership</h3>
+                    <p class="text-gray-400">We work as an extension of your team, ensuring your goals become our goals.</p>
+                </div>
+                
+                <!-- Feature 8 -->
+                <div class="feature-card p-6 rounded-xl text-center" data-aos="fade-up" data-aos-delay="800">
+                    <div class="feature-icon mx-auto">
+                        <i class="fas fa-chart-line text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">ROI Focused</h3>
+                    <p class="text-gray-400">Solutions designed to deliver measurable business value and return on investment.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Banner -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="cta-banner rounded-2xl p-12 text-center relative" data-aos="fade-up">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your <span class="gradient-text">Business</span>?</h2>
+                <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                    Schedule a free consultation with our experts to discuss your requirements and discover how our solutions can drive your success.
+                </p>
+                <a href="contact.html" class="btn-primary px-8 py-4 rounded-full text-white font-medium text-lg inline-block">
+                    Book a Free Consultation
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div data-aos="fade-up">
+                    <div class="flex items-center space-x-2 mb-6">
+                        <div class="w-10 h-10 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <span class="text-white font-bold text-xl">ZD</span>
+                        </div>
+                        <span class="text-xl font-bold gradient-text">Zygnite Dev-Hub</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">Empowering businesses with cutting-edge technology solutions and digital transformation services.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-indigo-600 transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-indigo-600 transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-indigo-600 transition">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-indigo-600 transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-xl font-bold mb-6">Quick Links</h3>
+                    <ul class="space-y-4">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="services-pricing.html" class="text-white font-medium">Services</a></li>
+                        <li><a href="portfolio.html" class="text-gray-400 hover:text-white transition">Portfolio</a></li>
+                        <li><a href="blogs.html" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="contact.html" class="text-gray-400 hover:text-white transition">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-xl font-bold mb-6">Our Services</h3>
+                    <ul class="space-y-4">
+                        <li><a href="services-pricing.html" class="text-gray-400 hover:text-white transition">Web Development</a></li>
+                        <li><a href="services-pricing.html" class="text-gray-400 hover:text-white transition">Mobile App Development</a></li>
+                        <li><a href="services-pricing.html" class="text-gray-400 hover:text-white transition">Cloud Solutions</a></li>
+                        <li><a href="services-pricing.html" class="text-gray-400 hover:text-white transition">AI & Machine Learning</a></li>
+                        <li><a href="services-pricing.html" class="text-gray-400 hover:text-white transition">Data Analytics</a></li>
+                        <li><a href="services-pricing.html" class="text-gray-400 hover:text-white transition">Cybersecurity</a></li>
+                    </ul>
+                </div>
+                
+                <div data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="text-xl font-bold mb-6">Contact Us</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-indigo-500 mt-1 mr-3"></i>
+                            <span class="text-gray-400">123 Tech Street, Silicon Valley, CA 94025</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone text-indigo-500 mr-3"></i>
+                            <span class="text-gray-400">+1 (555) 123-4567</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-indigo-500 mr-3"></i>
+                            <span class="text-gray-400">info@zygnitedevhub.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2023 Zygnite Dev-Hub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Service Details Modal -->
+    <div id="service-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modal-body">
+                <!-- Modal content will be dynamically inserted here -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 w-12 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white shadow-lg opacity-0 invisible transition-all duration-300 hover:opacity-100">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            easing: 'ease-out-cubic'
+        });
+        
+        // Service details data
+        const serviceDetails = {
+            'web-development': {
+                title: 'Web Development',
+                icon: 'fas fa-code',
+                description: 'Our web development services create powerful, responsive, and user-friendly websites that drive engagement and conversions.',
+                features: [
+                    'Custom web application development',
+                    'Responsive and mobile-first design',
+                    'E-commerce solutions',
+                    'Content management systems',
+                    'Progressive web apps (PWA)',
+                    'API development and integration'
+                ],
+                technologies: ['React', 'Angular', 'Vue.js', 'Node.js', 'PHP', 'Python', 'Ruby on Rails']
+            },
+            'mobile-development': {
+                title: 'Mobile App Development',
+                icon: 'fas fa-mobile-alt',
+                description: 'We build high-performance, feature-rich mobile applications for iOS and Android platforms.',
+                features: [
+                    'Native iOS and Android development',
+                    'Cross-platform solutions (React Native, Flutter)',
+                    'UI/UX design for mobile',
+                    'App store optimization',
+                    'Mobile app maintenance and support',
+                    'Wearable app development'
+                ],
+                technologies: ['Swift', 'Kotlin', 'React Native', 'Flutter', 'Xamarin', 'Ionic']
+            },
+            'cloud-solutions': {
+                title: 'Cloud Solutions',
+                icon: 'fas fa-cloud',
+                description: 'Our cloud services help businesses leverage the power of cloud computing for scalability and efficiency.',
+                features: [
+                    'Cloud infrastructure setup',
+                    'Cloud migration services',
+                    'Multi-cloud and hybrid cloud strategies',
+                    'Cloud security and compliance',
+                    'DevOps implementation',
+                    'Cloud cost optimization'
+                ],
+                technologies: ['AWS', 'Microsoft Azure', 'Google Cloud Platform', 'Docker', 'Kubernetes', 'Terraform']
+            },
+            'ai-ml': {
+                title: 'AI & Machine Learning',
+                icon: 'fas fa-robot',
+                description: 'Harness the power of artificial intelligence and machine learning to gain insights and automate processes.',
+                features: [
+                    'Predictive analytics',
+                    'Natural language processing',
+                    'Computer vision solutions',
+                    'Recommendation engines',
+                    'Chatbot development',
+                    'AI model training and deployment'
+                ],
+                technologies: ['TensorFlow', 'PyTorch', 'Scikit-learn', 'Keras', 'OpenCV', 'BERT', 'GPT']
+            },
+            'data-analytics': {
+                title: 'Data Analytics',
+                icon: 'fas fa-database',
+                description: 'Transform raw data into actionable insights with our comprehensive data analytics solutions.',
+                features: [
+                    'Business intelligence solutions',
+                    'Data visualization and dashboards',
+                    'Big data processing',
+                    'Data warehousing',
+                    'Real-time analytics',
+                    'Data governance and quality'
+                ],
+                technologies: ['Tableau', 'Power BI', 'Apache Spark', 'Hadoop', 'SQL', 'Python', 'R']
+            },
+            'cybersecurity': {
+                title: 'Cybersecurity',
+                icon: 'fas fa-lock',
+                description: 'Protect your digital assets with our comprehensive cybersecurity solutions and services.',
+                features: [
+                    'Security audits and assessments',
+                    'Penetration testing',
+                    'Vulnerability management',
+                    'Security monitoring and SIEM',
+                    'Compliance management',
+                    'Incident response and forensics'
+                ],
+                technologies: ['Firewalls', 'IDS/IPS', 'SIEM', 'Encryption', 'Multi-factor Authentication', 'Endpoint Protection']
+            }
+        };
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+            
+            // Back to top button
+            const backToTop = document.getElementById('back-to-top');
+            if (window.scrollY > 300) {
+                backToTop.classList.remove('opacity-0', 'invisible');
+                backToTop.classList.add('opacity-100', 'visible');
+            } else {
+                backToTop.classList.add('opacity-0', 'invisible');
+                backToTop.classList.remove('opacity-100', 'visible');
+            }
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.add('active');
+        });
+        
+        closeMenuBtn.addEventListener('click', function() {
+            mobileMenu.classList.remove('active');
+        });
+        
+        // Service details modal
+        const modal = document.getElementById('service-modal');
+        const modalBody = document.getElementById('modal-body');
+        const closeModal = document.querySelector('.close');
+        
+        // Open modal when service details button is clicked
+        document.querySelectorAll('.service-details-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const service = this.getAttribute('data-service');
+                const details = serviceDetails[service];
+                
+                if (details) {
+                    modalBody.innerHTML = `
+                        <div class="flex items-center mb-6">
+                            <div class="w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center mr-4">
+                                <i class="${details.icon} text-white text-2xl"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold">${details.title}</h2>
+                        </div>
+                        <p class="text-gray-300 mb-6">${details.description}</p>
+                        
+                        <h3 class="text-xl font-bold mb-4">Key Features</h3>
+                        <ul class="mb-8">
+                            ${details.features.map(feature => `
+                                <li class="flex items-center mb-2">
+                                    <i class="fas fa-check text-indigo-400 mr-3"></i>
+                                    <span class="text-gray-300">${feature}</span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                        
+                        <h3 class="text-xl font-bold mb-4">Technologies We Use</h3>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            ${details.technologies.map(tech => `
+                                <span class="px-3 py-1 bg-gray-800 rounded-full text-sm">${tech}</span>
+                            `).join('')}
+                        </div>
+                        
+                        <div class="flex justify-end">
+                            <a href="contact.html" class="btn-primary px-6 py-2 rounded-full text-white font-medium">
+                                Get Started
+                            </a>
+                        </div>
+                    `;
+                    
+                    modal.style.display = 'block';
+                }
+            });
+        });
+        
+        // Close modal when close button is clicked
+        closeModal.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+        
+        // Close modal when clicking outside of it
+        window.addEventListener('click', function(event) {
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // Back to top functionality
+        document.getElementById('back-to-top').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Add smooth scrolling to all links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

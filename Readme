@@ -1,0 +1,24 @@
+zygnite-dev-hub/
+├── index.html              # Homepage
+├── about.html              # About Zygnite
+├── services.html           # IT Solutions / Services
+├── products.html           # SaaS products & APIs
+├── blog.html               # Blogs / Insights
+├── careers.html            # Job Opportunities
+├── contact.html            # Contact & Inquiry Form
+├── assets/
+│   ├── css/
+│   │   ├── style.css              # Custom styles
+│   │   └── responsive.css         # Mobile-specific tweaks (optional)
+│   ├── js/
+│   │   ├── main.js                # Animations & interactivity
+│   │   └── bootstrap.bundle.min.js
+│   ├── images/
+│   │   ├── portfolio/            # Project screenshots
+│   │   ├── technology/           # Tech logos & icons
+│   │   └── banners/              # Hero backgrounds
+│   └── vendor/
+│       ├── bootstrap/            # Bootstrap framework files
+│       ├── fontawesome/          # Font Awesome icons
+│       └── aos/                  # Animate On Scroll library
+└── README.md
